@@ -40,7 +40,7 @@ public class Login_Activity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),pantalla_principal_usuarios_activity.class);
+                Intent intent = new Intent(getApplicationContext(), pantalla_principal_Doctores_activity.class);
                 startActivity(intent);
             }
         });
