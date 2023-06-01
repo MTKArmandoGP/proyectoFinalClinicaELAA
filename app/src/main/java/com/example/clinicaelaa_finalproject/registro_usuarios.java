@@ -1,5 +1,7 @@
 package com.example.clinicaelaa_finalproject;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +9,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +75,104 @@ public class registro_usuarios extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registro_usuarios, container, false);
+        View view= inflater.inflate(R.layout.fragment_registro_usuarios, container, false);
+
+        // Obtener referencia al botón de envío
+        Button btnEnviar = view.findViewById(R.id.btn_registrar);
+
+        // Agregar un listener al botón de envío
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Aquí puedes realizar la lógica para enviar los datos al servidor PHP
+                enviarDatosAlServidor();
+            }
+        });
+        return view;
     }
+
+    private void enviarDatosAlServidor() {
+        // Obtener los valores de los campos de entrada del usuario
+        TextInputEditText txtNombre = getView().findViewById(R.id.txtnombre_register_usuarios);
+        TextInputEditText txtApellido = getView().findViewById(R.id.txtapellido_register_usuarios);
+        TextInputEditText txtCorreo = getView().findViewById(R.id.txtemail_register_usuarios);
+        TextInputEditText txtTelefono = getView().findViewById(R.id.txttelefono_register_usuarios);
+        TextInputEditText txtUsuario = getView().findViewById(R.id.txtusuario_register_usuarios);
+        TextInputEditText txtContraseña = getView().findViewById(R.id.txtcontraseña_register_usuarios);
+
+        String nombre = txtNombre.getText().toString();
+        String apellido = txtApellido.getText().toString();
+        String correo = txtCorreo.getText().toString();
+        String telefono = txtTelefono.getText().toString();
+        String usuario = txtUsuario.getText().toString();
+        String contraseña = txtContraseña.getText().toString();
+
+        // Ejecutar AsyncTask para realizar la solicitud HTTP POST en un hilo secundario
+        new EnviarDatosAsyncTask().execute(nombre, apellido, correo, telefono, usuario, contraseña);
+
+    }
+
+    private class EnviarDatosAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String nombre = params[0];
+            String apellido = params[1];
+            String correo = params[2];
+            String telefono = params[3];
+            String usuario = params[4];
+            String contraseña = params[5];
+
+            // Construir los parámetros a enviar
+            String parametros = "nombre_usuario=" + nombre +
+                    "&apellidos_usuario=" + apellido +
+                    "&correo_usuario=" + correo +
+                    "&numero_usuario=" + telefono +
+                    "&password_usuario=" + contraseña +
+                    "&rol_usuario=2" +
+                    "&usuario_usuario=" + usuario;
+
+            try {
+                // Realizar la solicitud HTTP POST en el hilo secundario
+                URL url = new URL("http://192.168.3.14/proyecto_clinicaELAA/registrar_usuarios.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+                OutputStream outputStream = connection.getOutputStream();
+                outputStream.write(parametros.getBytes());
+                outputStream.flush();
+                outputStream.close();
+
+                // Leer la respuesta del servidor
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+                reader.close();
+
+                // Retornar la respuesta del servidor
+                return stringBuilder.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // Mostrar mensaje de éxito o error utilizando Toast
+            if (result != null) {
+                Toast.makeText(getContext(), "Datos enviados correctamente", Toast.LENGTH_SHORT).show();
+                // Guardar las credenciales del usuario en SharedPreferences
+                Intent intent = new Intent(getContext(), Login_Activity.class);
+                startActivity(intent);
+                getActivity().finish();
+            } else {
+                Toast.makeText(getContext(), "Error al enviar los datos", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 }

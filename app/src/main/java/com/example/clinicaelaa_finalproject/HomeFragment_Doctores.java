@@ -1,5 +1,8 @@
 package com.example.clinicaelaa_finalproject;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +59,27 @@ public class HomeFragment_Doctores extends Fragment {
         }
     }
 
+    Button btnCerrar_Doctores;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home__doctores, container, false);
+        View view=inflater.inflate(R.layout.fragment_home__doctores, container, false);
+
+        btnCerrar_Doctores=view.findViewById(R.id.CerrarSesion_Doctores);
+
+        btnCerrar_Doctores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = getActivity().getSharedPreferences("preferenciasLogin", Context.MODE_PRIVATE);
+                preferences.edit().clear().apply();
+
+                Intent intent = new Intent(getActivity(), Login_Activity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        return view;
     }
 }

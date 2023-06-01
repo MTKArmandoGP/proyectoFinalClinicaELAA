@@ -160,7 +160,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:hint="Cedula Profesional"
+            android:hint="Clave de Registro"
             android:textColorHint="@color/AzulFinal"
             app:boxBackgroundColor="#7EFFFFFF"
             app:boxStrokeColor="@color/AzulFinal"
@@ -176,7 +176,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btn_registrar"
+            android:id="@+id/btn_registrar_doctores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cedula_register_doctores"

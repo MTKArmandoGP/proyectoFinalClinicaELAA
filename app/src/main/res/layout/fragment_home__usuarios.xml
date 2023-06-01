@@ -5,9 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment_Usuarios">
 
-    <TextView
+
+    <Button
+        android:id="@+id/CerrarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pagina Principal"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="18dp"
+        android:backgroundTint="@color/botonlogin2"
+        android:fontFamily="@font/ketikan_demo"
+        android:text="Salir de Usuarios"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
