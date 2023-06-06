@@ -75,6 +75,7 @@ public class Login_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentAdmin = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intentAdmin);
+                finish();
             }
         });
         olvidoContraseña.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +83,7 @@ public class Login_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intentAdmin = new Intent(getApplicationContext(), olvido_contrasena_activity.class);
                 startActivity(intentAdmin);
+                finish();
             }
         });
 

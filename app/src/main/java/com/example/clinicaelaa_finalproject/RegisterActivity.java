@@ -2,6 +2,7 @@ package com.example.clinicaelaa_finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -9,6 +10,8 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -87,6 +90,17 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+        FloatingActionButton regresar = findViewById(R.id.btn_regresar_olvido_contraseña);
+        regresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Login_Activity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
             }
         });
     }
