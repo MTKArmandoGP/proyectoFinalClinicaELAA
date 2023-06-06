@@ -2,7 +2,13 @@ package com.example.clinicaelaa_finalproject;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,23 +17,31 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
-public class pantalla_principal_usuarios_activity extends AppCompatActivity {
+public class pantalla_principal_usuarios_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
 
     private int selectedTab=1;
+    private DrawerLayout drawerLayout;
 
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_principal_usuarios);
+
+
 
             //Enlace de cada uno de los LinearLayouts necesarios
             final LinearLayout homeLayout= findViewById(R.id.homeLayout);
@@ -284,7 +298,82 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity {
                 }
             });
 
+            Toolbar toolbar=findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            drawerLayout=findViewById(R.id.drawer_layout);
+            NavigationView navigationView=findViewById(R.id.nav_view);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_nav,R.string.close_nav);
+            drawerLayout.addDrawerListener(toggle);
+            toggle.syncState();
+
+
+
+            if(savedInstanceState==null){
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new HomeFragment_Usuarios()).commit();
+                navigationView.setCheckedItem(R.id.nav_home);
+            }
+
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new HomeFragment_Usuarios()).commit();
+                break;
+            case R.id.nav_medicine:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new MedicineFragment_Usuarios()).commit();
+                break;
+            case R.id.nav_dates:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new DatesFragment_Usuarios()).commit();
+                break;
+            case R.id.nav_recipes:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new RecipesFragment_Usuarios()).commit();
+                break;
+            case R.id.nav_settings:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new SettingsFragment_Usuarios()).commit();
+                break;
+            case R.id.nav_herramientas:
+                Intent intent = new Intent(this, Herramientas_activity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_logout:
+                cerrarSesion();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+            if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }else{
+                super.onBackPressed();
+            }
+    }
+
+
+    private void cerrarSesion() {
+        // Aquí realiza las acciones necesarias para cerrar la sesión, como limpiar las preferencias o eliminar los datos de inicio de sesión.
+
+        // Limpiar preferencias
+        SharedPreferences preferences = getSharedPreferences("preferenciasLogin", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
+        // Lanzar la actividad de inicio de sesión
+        Intent intent = new Intent(this, Login_Activity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish(); // Finalizar la actividad actual para evitar volver atrás con el botón de retroceso
+    }
 
 }

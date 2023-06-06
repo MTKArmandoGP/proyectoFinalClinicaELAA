@@ -7,12 +7,26 @@
     tools:context=".olvido_contrasena_activity"
     android:background="@drawable/fondo2">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_regresar_olvido_contraseña"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Volver"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/md_theme_light_primary"/>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="90dp"
         android:gravity="center"
         android:text="RECUPERAR CONTRASEÑA"
         android:textColor="@color/black"

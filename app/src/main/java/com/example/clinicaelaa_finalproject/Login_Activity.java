@@ -46,6 +46,7 @@ public class Login_Activity extends AppCompatActivity {
         olvidoContraseña = findViewById((R.id.tv_olvido_contrasena));
         btnIngresar = findViewById(R.id.btn_ingresar_login);
 
+
         //Relación de las cajas del texto
         edtUsuario = findViewById(R.id.txtusuario_login);
         edtPassword=findViewById(R.id.txtcontraseña_login);
@@ -73,6 +74,13 @@ public class Login_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intentAdmin = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intentAdmin);
+            }
+        });
+        olvidoContraseña.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentAdmin = new Intent(getApplicationContext(), olvido_contrasena_activity.class);
                 startActivity(intentAdmin);
             }
         });
