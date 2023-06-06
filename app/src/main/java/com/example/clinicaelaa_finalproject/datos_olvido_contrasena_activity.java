@@ -69,6 +69,21 @@ public class datos_olvido_contrasena_activity extends AppCompatActivity {
             return;
         }
 
+        if (password.length() < 6) {
+            passwordLayout.setError("La contraseña debe tener al menos 6 caracteres");
+            return;
+        }
+
+        if (!password.matches(".*[A-Z].*")) {
+            passwordLayout.setError("La contraseña debe contener al menos una letra mayúscula");
+            return;
+        }
+
+        if (!password.matches(".*[!@#$%^&*()\\-_+].*")) {
+            passwordLayout.setError("La contraseña debe contener al menos un símbolo");
+            return;
+        }
+
         if (password.equals(confirmPassword)) {
             // Si las contraseñas coinciden
             guardarCambios();

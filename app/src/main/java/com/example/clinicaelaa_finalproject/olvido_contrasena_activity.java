@@ -20,6 +20,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.Authenticator;
 import javax.mail.MessagingException;
@@ -44,12 +46,7 @@ public class olvido_contrasena_activity extends AppCompatActivity {
         enviarCorreo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailEditText.getText().toString();
-                enviarCorreo(email);
-                Toast.makeText(olvido_contrasena_activity.this, "Tu código se envio correctamente", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), datos_olvido_contrasena_activity.class);
-                startActivity(intent);
-                finish();
+                validarEmail();
             }
         });
         FloatingActionButton regresar = findViewById(R.id.btn_regresar_olvido_contraseña);
@@ -62,6 +59,32 @@ public class olvido_contrasena_activity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+
+    private void validarEmail() {
+        String email = emailEditText.getText().toString().trim();
+
+        // Expresión regular para verificar el formato del correo electrónico
+        String emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
+        // Compila el patrón de expresión regular
+        Pattern pattern = Pattern.compile(emailPattern);
+
+        // Comprueba si el correo electrónico cumple con el formato requerido
+        Matcher matcher = pattern.matcher(email);
+
+        if (email.isEmpty() || !matcher.matches()) {
+            // El correo electrónico está vacío o no cumple con el formato requerido
+            emailEditText.setError("Ingresa un correo electrónico válido");
+            emailEditText.requestFocus();
+        } else {
+            enviarCorreo(email);
+            Toast.makeText(olvido_contrasena_activity.this, "Tu código se envio correctamente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), datos_olvido_contrasena_activity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void enviarCorreo(final String email) {
