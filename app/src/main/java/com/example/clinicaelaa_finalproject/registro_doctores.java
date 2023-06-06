@@ -26,6 +26,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,6 +104,66 @@ public class registro_doctores extends Fragment {
                 String rol = "1";
                 String cedula = rolEditText.getText().toString();
                 String usuario = usuarioEditText.getText().toString();
+
+
+                if (nombre.isEmpty()) {
+                    nombreEditText.setError("Ingrese su nombre");
+                    return;
+                }
+
+                if (apellidos.isEmpty()) {
+                    apellidosEditText.setError("Ingrese sus apellidos");
+                    return;
+                }
+
+                if (correo.isEmpty()) {
+                    correoEditText.setError("Ingrese un correo");
+                    correoEditText.requestFocus();
+                    return;
+                } else {
+                    // Expresión regular para validar el formato del correo electrónico
+                    String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{3,}$";
+                    Pattern pattern = Pattern.compile(regex);
+                    Matcher matcher = pattern.matcher(correo);
+                    if (!matcher.matches()) {
+                        correoEditText.setError("Ingrese un correo válido");
+                        correoEditText.requestFocus();
+                        return;
+                    }
+                }
+
+                if (numero.isEmpty()) {
+                    numeroEditText.setError("Ingrese su número");
+                    return;
+                }
+
+                if (password.isEmpty()) {
+                    passwordEditText.setError("Ingrese una contraseña");
+                    passwordEditText.requestFocus();
+                    return;
+                } else if (password.length() < 6) {
+                    passwordEditText.setError("La contraseña debe tener al menos 6 caracteres");
+                    passwordEditText.requestFocus();
+                    return;
+                } else if (!password.matches(".*[A-Z].*")) {
+                    passwordEditText.setError("La contraseña debe contener al menos una letra mayúscula");
+                    passwordEditText.requestFocus();
+                    return;
+                } else if (!password.matches(".*[!@#$%^&*()\\-_+].*")) {
+                    passwordEditText.setError("La contraseña debe contener al menos un símbolo");
+                    passwordEditText.requestFocus();
+                    return;
+                }
+
+                if (cedula.isEmpty()) {
+                    rolEditText.setError("Ingrese su cédula");
+                    return;
+                }
+
+                if (usuario.isEmpty()) {
+                    usuarioEditText.setError("Ingrese su usuario");
+                    return;
+                }
 
                 // Verificar el valor de la cédula
                 if (cedula.equals("123456")) {

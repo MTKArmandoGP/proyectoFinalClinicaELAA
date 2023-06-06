@@ -23,6 +23,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,6 +108,65 @@ public class registro_usuarios extends Fragment {
         String telefono = txtTelefono.getText().toString();
         String usuario = txtUsuario.getText().toString();
         String contraseña = txtContraseña.getText().toString();
+
+        // Verificar que los campos no estén vacíos
+        if (nombre.isEmpty()) {
+            txtNombre.setError("Ingrese su nombre(s)");
+            txtNombre.requestFocus();
+            return;
+        }
+
+        if (apellido.isEmpty()) {
+            txtApellido.setError("Ingrese su apellido(s)");
+            txtApellido.requestFocus();
+            return;
+        }
+
+        if (correo.isEmpty()) {
+            txtCorreo.setError("Ingrese un correo");
+            txtCorreo.requestFocus();
+            return;
+        } else {
+            // Expresión regular para validar el formato del correo electrónico
+            String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{3,}$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(correo);
+            if (!matcher.matches()) {
+                txtCorreo.setError("Ingrese un correo válido");
+                txtCorreo.requestFocus();
+                return;
+            }
+        }
+
+        if (telefono.isEmpty()) {
+            txtTelefono.setError("Ingrese un número de teléfono");
+            txtTelefono.requestFocus();
+            return;
+        }
+
+        if (usuario.isEmpty()) {
+            txtUsuario.setError("Ingrese un usuario");
+            txtUsuario.requestFocus();
+            return;
+        }
+
+        if (contraseña.isEmpty()) {
+            txtContraseña.setError("Ingrese una contraseña");
+            txtContraseña.requestFocus();
+            return;
+        } else if (contraseña.length() < 6) {
+            txtContraseña.setError("La contraseña debe tener al menos 6 caracteres");
+            txtContraseña.requestFocus();
+            return;
+        } else if (!contraseña.matches(".*[A-Z].*")) {
+            txtContraseña.setError("La contraseña debe contener al menos una letra mayúscula");
+            txtContraseña.requestFocus();
+            return;
+        } else if (!contraseña.matches(".*[!@#$%^&*()\\-_+].*")) {
+            txtContraseña.setError("La contraseña debe contener al menos un símbolo");
+            txtContraseña.requestFocus();
+            return;
+        }
 
         // Ejecutar AsyncTask para realizar la solicitud HTTP POST en un hilo secundario
         new EnviarDatosAsyncTask().execute(nombre, apellido, correo, telefono, usuario, contraseña);
