@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Herramientas_activity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_regresar_herramientas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Volver"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/md_theme_light_primary"/>
+
     <FrameLayout
         android:id="@+id/frameLayoutHerramientas"
         android:layout_width="match_parent"

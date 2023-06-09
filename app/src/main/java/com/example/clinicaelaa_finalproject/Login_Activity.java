@@ -66,6 +66,10 @@ public class Login_Activity extends AppCompatActivity {
 
                 }else{
                     Toast.makeText(Login_Activity.this, "Ingresa tus datos", Toast.LENGTH_SHORT).show();
+                    edtUsuario.setError("Ingresa tu usuario");
+                    edtUsuario.requestFocus();
+                    edtPassword.setError("Ingresa tu contraseña");
+                    edtPassword.requestFocus();
                 }
             }
         });
@@ -122,6 +126,7 @@ public class Login_Activity extends AppCompatActivity {
                     finish();
                 } else {
                     Toast.makeText(Login_Activity.this, "Usuario o Contraseña incorrectos", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
@@ -165,6 +170,7 @@ public class Login_Activity extends AppCompatActivity {
         editor.putString("usuario", usuario);
         editor.putString("password", password);
         editor.putBoolean("sesion", true);
+
 
         // Obtener el valor del campo "rol_usuario" de la respuesta del servidor
         int rolUsuario = obtenerRolUsuario(response);
