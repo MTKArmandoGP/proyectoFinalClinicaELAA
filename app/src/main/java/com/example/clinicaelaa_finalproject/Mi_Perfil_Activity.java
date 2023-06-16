@@ -75,7 +75,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
     private EditText txtnombre,txtApellidos,txtCorreo,txtUsuario;
 
     private void fetchData() {
-        String url = "http://192.168.3.14/proyecto_clinicaELAA/obtenerDatos.php";
+        String url = "http://192.168.137.1/proyecto_clinicaELAA/obtenerDatos.php";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -118,8 +118,6 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
                             rol = jsonObject.getString("rol");
                             usuarioConsulta = jsonObject.getString("usuario");
                             foto = jsonObject.getString("foto");
-
-                            guardarPreferencias(passwordConsulta,usuarioConsulta,rol); // Pasar la respuesta del servidor a la función guardarPreferencias
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -208,6 +206,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("preferenciasLogin", Context.MODE_PRIVATE);
         usuario = preferences.getString("usuario", "");
         password = preferences.getString("password", "");
+        SharedPreferences.Editor editor = preferences.edit();
 
         fetchData();
         txtnombre = findViewById(R.id.txtnombre_perfil);
@@ -245,6 +244,12 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 // Llamar al método para actualizar el perfil
                 updateProfile();
+
+                editor.putString("usuario", txtUsuario.getText().toString());
+
+                // Reiniciar la actividad para aplicar los cambios
+                recreate();
+
             }
         });
 
@@ -274,7 +279,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
     }
 
     private void updateProfile() {
-        String url = "http://192.168.3.14/proyecto_clinicaELAA/actualizar.php";
+        String url = "http://192.168.137.1/proyecto_clinicaELAA/actualizar.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -307,18 +312,6 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void guardarPreferencias(String password, String Usuario, String rol_usuario) {
-        SharedPreferences preferences = getSharedPreferences("preferenciasLogin", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("usuario", Usuario);
-        editor.putString("password", password);
-
-        // Aquí debes asignar el valor correspondiente al rol
-        int rolUsuario = obtenerRolUsuario(rol_usuario);
-        editor.putInt("rol_usuario", rolUsuario);
-
-        editor.apply();
-    }
 
 
     private int obtenerRolUsuario(String response) {
@@ -408,7 +401,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         String name = nombre; // Reemplaza con los datos reales
         String email = correo; // Reemplaza con los datos reales
 
-        String url = "http://192.168.3.14/proyecto_clinicaELAA/subirImagenUsuario.php";
+        String url = "http://192.168.174.201/proyecto_clinicaELAA/subirImagenUsuario.php";
 
         // Crear una solicitud POST usando StringRequest de Volley
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

@@ -3,10 +3,13 @@ package com.example.clinicaelaa_finalproject;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,60 @@ public class Conversor_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_conversor_, container, false);
+        View view = inflater.inflate(R.layout.fragment_conversor_, container, false);
+
+        Button btnPeso = view.findViewById(R.id.btnPeso);
+        Button btnLongitud=view.findViewById(R.id.btnLongitud);
+        Button btnVolumen=view.findViewById(R.id.btnVolumen);
+        Button btnTemperatura=view.findViewById(R.id.btnTemperatura);
+
+
+        btnPeso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.frameLayoutHerramientas, Peso_Fragment.class, null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        btnLongitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.frameLayoutHerramientas, Longitud_Fragment.class, null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        btnVolumen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.frameLayoutHerramientas, Volumen_Fragment.class, null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        btnTemperatura.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.frameLayoutHerramientas, Temperatura_Fragment.class, null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        return view;
     }
+
+
 }

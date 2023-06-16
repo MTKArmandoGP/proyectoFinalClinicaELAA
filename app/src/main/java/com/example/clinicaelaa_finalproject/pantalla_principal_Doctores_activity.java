@@ -59,7 +59,7 @@ public class pantalla_principal_Doctores_activity extends AppCompatActivity impl
 
     // Método para realizar la solicitud de red y obtener los datos
     private void fetchData() {
-        String url = "http://192.168.3.14/proyecto_clinicaELAA/obtenerDatos.php";
+        String url = "http://192.168.174.201/proyecto_clinicaELAA/obtenerDatos.php";
 
         OkHttpClient client = new OkHttpClient();
 

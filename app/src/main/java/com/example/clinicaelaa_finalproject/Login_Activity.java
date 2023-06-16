@@ -62,7 +62,7 @@ public class Login_Activity extends AppCompatActivity {
 
                 if(!usuario.isEmpty() && !password.isEmpty()){
 
-                    validarUsuario("http://192.168.3.14/proyecto_clinicaELAA/validar_usuario.php");
+                    validarUsuario("http://192.168.137.1/proyecto_clinicaELAA/validar_usuario.php");
 
                 }else{
                     Toast.makeText(Login_Activity.this, "Ingresa tus datos", Toast.LENGTH_SHORT).show();
