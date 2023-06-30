@@ -66,8 +66,7 @@
         android:paddingTop="5dp"
         android:paddingEnd="20dp"
         android:paddingBottom="5dp"
-        android:weightSum="4"
-        android:background="#8DD2F3">
+        android:weightSum="4">
 
 
 

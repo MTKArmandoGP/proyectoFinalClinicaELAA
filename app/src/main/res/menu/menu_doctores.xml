@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
@@ -9,8 +10,9 @@
 
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/casa"
-            android:title="Pantalla Principal"/>
+            app:actionLayout="@layout/menu_item_home"
+            app:showAsAction="always"
+            tools:ignore="MenuTittle"/>
 
         <item
             android:id="@+id/nav_medicine"
@@ -29,8 +31,8 @@
 
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/configuraciones"
-            android:title="Configuraciones"/>
+            app:actionLayout="@layout/menu_item_configuraciones"
+            app:showAsAction="always" />
 
         <item
             android:id="@+id/nav_labs"

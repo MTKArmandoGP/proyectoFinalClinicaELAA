@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -71,11 +73,11 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
     private String correo;
     private String numero;
     private String rol;
-    private Button modificar, guardar;
+    private Button modificar, guardar, cambiarCon;
     private EditText txtnombre,txtApellidos,txtCorreo,txtUsuario;
 
     private void fetchData() {
-        String url = "http://192.168.137.1/proyecto_clinicaELAA/obtenerDatos.php";
+        String url = "http://192.168.218.201/proyecto_clinicaELAA/obtenerDatos.php";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -214,8 +216,15 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         txtUsuario = findViewById(R.id.txtusuario_perfil);
         txtCorreo = findViewById(R.id.txtcorreo_perfil);
 
+        txtnombre.addTextChangedListener(new CharacterLimitTextWatcher(txtnombre, 25));
+        txtApellidos.addTextChangedListener(new CharacterLimitTextWatcher(txtApellidos, 25));
+        txtUsuario.addTextChangedListener(new CharacterLimitTextWatcher(txtUsuario, 25));
+        txtCorreo.addTextChangedListener(new CharacterLimitTextWatcher(txtCorreo, 60));
+
+
         modificar=findViewById(R.id.button_perfil);
         guardar=findViewById(R.id.guardar_perfil);
+        cambiarCon=findViewById(R.id.Cambiar_contrasena);
 
         FloatingActionButton regresar = findViewById(R.id.btn_regresar_miPerfil);
         regresar.setOnClickListener(new View.OnClickListener() {
@@ -242,13 +251,18 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Llamar al método para actualizar el perfil
-                updateProfile();
+                // Validar que todos los campos estén llenos
+                if (areAllFieldsFilled()) {
+                    // Llamar al método para actualizar el perfil
+                    updateProfile();
 
-                editor.putString("usuario", txtUsuario.getText().toString());
+                    editor.putString("usuario", txtUsuario.getText().toString());
 
-                // Reiniciar la actividad para aplicar los cambios
-                recreate();
+                    // Reiniciar la actividad para aplicar los cambios
+                    recreate();
+                } else {
+                    Toast.makeText(Mi_Perfil_Activity.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -276,10 +290,20 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
             }
         });
 
+        cambiarCon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), olvido_contrasena_activity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                finish();
+            }
+        });
+
     }
 
     private void updateProfile() {
-        String url = "http://192.168.137.1/proyecto_clinicaELAA/actualizar.php";
+        String url = "http://192.168.218.201/proyecto_clinicaELAA/actualizar.php";
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -325,6 +349,65 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         return 0;
     }
 
+    private boolean areAllFieldsFilled() {
+        boolean isNombreEmpty = false;
+        boolean isApellidosEmpty = false;
+        boolean isCorreoEmpty = false;
+        boolean isUsuarioEmpty = false;
+
+        String nombre = txtnombre.getText().toString().trim();
+        String apellidos = txtApellidos.getText().toString().trim();
+        String correo = txtCorreo.getText().toString().trim();
+        String usuario = txtUsuario.getText().toString().trim();
+
+        // Verificar si los campos están vacíos
+        if (nombre.isEmpty()) {
+            txtnombre.setError("Campo requerido");
+            isNombreEmpty = true;
+        }
+
+        if (apellidos.isEmpty()) {
+            txtApellidos.setError("Campo requerido");
+            isApellidosEmpty = true;
+        }
+
+        if (correo.isEmpty()) {
+            txtCorreo.setError("Campo requerido");
+            isCorreoEmpty = true;
+        }
+
+        if (usuario.isEmpty()) {
+            txtUsuario.setError("Campo requerido");
+            isUsuarioEmpty = true;
+        }
+
+        // Mostrar un mensaje de error si hay campos vacíos
+        if (isNombreEmpty || isApellidosEmpty || isCorreoEmpty || isUsuarioEmpty) {
+            Toast.makeText(this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Verificar el formato del correo electrónico
+        if (!isValidEmail(correo)) {
+            txtCorreo.setError("Por favor, ingresa un correo electrónico válido");
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!email.matches(emailRegex)) {
+            txtCorreo.setError("Por favor, ingresa un correo electrónico válido");
+            return false;
+        }
+        return true;
+    }
+
+
+
 
 
 
@@ -344,10 +427,29 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         // Mostrar un diálogo para que el usuario seleccione la fuente de la imagen (galería o cámara)
         // Aquí debes implementar el código para mostrar el diálogo y manejar la selección del usuario
 
-        // Por ejemplo, para abrir la galería:
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
+        // Por ejemplo, puedes usar un AlertDialog para mostrar las opciones:
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Seleccionar imagen");
+        builder.setItems(new CharSequence[]{"Galería", "Cámara"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        // Abrir la galería
+                        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(galleryIntent, REQUEST_IMAGE_GALLERY);
+                        break;
+                    case 1:
+                        // Abrir la cámara
+                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAMERA);
+                        break;
+                }
+            }
+        });
+        builder.show();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -391,6 +493,8 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         }
     }
 
+    //CAMBIOOOOOOOOOOOOOOOOOOOOOOOOO222222
+
     private void uploadImage(Bitmap bitmap) {
         // Codificar la imagen en Base64
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -401,7 +505,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
         String name = nombre; // Reemplaza con los datos reales
         String email = correo; // Reemplaza con los datos reales
 
-        String url = "http://192.168.174.201/proyecto_clinicaELAA/subirImagenUsuario.php";
+        String url = "http://192.168.218.201/proyecto_clinicaELAA/subirImagenUsuario.php";
 
         // Crear una solicitud POST usando StringRequest de Volley
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -415,6 +519,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 // Manejar el error de la solicitud
                 Toast.makeText(Mi_Perfil_Activity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                System.out.println("ERROOOOOOOR:   "+error.getMessage());
             }
         }) {
             @NonNull

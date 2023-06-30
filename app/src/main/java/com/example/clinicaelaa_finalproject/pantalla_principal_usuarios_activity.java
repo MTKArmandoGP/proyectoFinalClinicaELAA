@@ -63,7 +63,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
     // Método para realizar la solicitud de red y obtener los datos
     private void fetchData() {
-        String url = "http://192.168.174.201/proyecto_clinicaELAA/obtenerDatos.php";
+        String url = "http://192.168.28.201/proyecto_clinicaELAA/obtenerDatos.php";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -226,7 +226,6 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
                             .commit();
                     if(selectedTab!=1){
 
-                        bottom.setBackgroundResource(R.color.home);
 
                         //Se colocan invisibles los textos
                         medicineTxt.setVisibility(View.GONE);
@@ -272,7 +271,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
                     if(selectedTab!=2){
 
-                        bottom.setBackgroundResource(R.color.medicine);
+
 
                         //Se colocan invisibles los textos
                         homeTxt.setVisibility(View.GONE);
@@ -294,7 +293,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                         //Se destaca el elemento seleccionado
-                        medicineLayout.setBackgroundResource(R.drawable.background_item_medicine);
+                        medicineLayout.setBackgroundResource(R.drawable.background_item_menu);
                         medicineTxt.setVisibility(View.VISIBLE);
                         ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                         scaleAnimation.setDuration(200);
@@ -318,7 +317,6 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
                     if(selectedTab!=3){
 
-                        bottom.setBackgroundResource(R.color.dates);
 
                         //Se colocan invisibles los textos
                         homeTxt.setVisibility(View.GONE);
@@ -340,7 +338,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                         //Se destaca el elemento seleccionado
-                        datesLayout.setBackgroundResource(R.drawable.background_item_dates);
+                        datesLayout.setBackgroundResource(R.drawable.background_item_menu);
                         datesTxt.setVisibility(View.VISIBLE);
                         ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                         scaleAnimation.setDuration(200);
@@ -364,7 +362,6 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
                     if(selectedTab!=4){
 
-                        bottom.setBackgroundResource(R.color.recipes);
 
                         //Se colocan invisibles los textos
                         homeTxt.setVisibility(View.GONE);
@@ -386,7 +383,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                         //Se destaca el elemento seleccionado
-                        recipesLayout.setBackgroundResource(R.drawable.background_item_recipes);
+                        recipesLayout.setBackgroundResource(R.drawable.background_item_menu);
                         recipesTxt.setVisibility(View.VISIBLE);
                         ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                         scaleAnimation.setDuration(200);
@@ -411,7 +408,6 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
                     if(selectedTab!=5){
 
-                        bottom.setBackgroundResource(R.color.settings);
 
                         //Se colocan invisibles los textos
                         homeTxt.setVisibility(View.GONE);
@@ -433,7 +429,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                         //Se destaca el elemento seleccionado
-                        settingsLayout.setBackgroundResource(R.drawable.background_item_settings);
+                        settingsLayout.setBackgroundResource(R.drawable.background_item_menu);
                         settingsTxt.setVisibility(View.VISIBLE);
                         ScaleAnimation scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                         scaleAnimation.setDuration(200);
@@ -447,6 +443,8 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
                 }
             });
+
+
 
             Toolbar toolbar=findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -497,7 +495,6 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.frameLayoutUsuarios,HomeFragment_Usuarios.class,null)
                         .commit();
-                bottom.setBackgroundResource(R.color.home);
 
                 //Se colocan invisibles los textos
                 medicineTxt.setVisibility(View.GONE);
@@ -531,7 +528,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
                 break;
             case R.id.nav_medicine:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new MedicineFragment_Usuarios()).commit();
-                bottom.setBackgroundResource(R.color.medicine);
+
 
                 //Se colocan invisibles los textos
                 homeTxt.setVisibility(View.GONE);
@@ -553,7 +550,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                 //Se destaca el elemento seleccionado
-                medicineLayout.setBackgroundResource(R.drawable.background_item_medicine);
+                medicineLayout.setBackgroundResource(R.drawable.background_item_menu);
                 medicineTxt.setVisibility(View.VISIBLE);
                 scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                 scaleAnimation.setDuration(200);
@@ -565,7 +562,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
                 break;
             case R.id.nav_dates:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new DatesFragment_Usuarios()).commit();
-                bottom.setBackgroundResource(R.color.dates);
+
 
                 //Se colocan invisibles los textos
                 homeTxt.setVisibility(View.GONE);
@@ -587,7 +584,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                 //Se destaca el elemento seleccionado
-                datesLayout.setBackgroundResource(R.drawable.background_item_dates);
+                datesLayout.setBackgroundResource(R.drawable.background_item_menu);
                 datesTxt.setVisibility(View.VISIBLE);
                 scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                 scaleAnimation.setDuration(200);
@@ -599,7 +596,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
                 break;
             case R.id.nav_recipes:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new RecipesFragment_Usuarios()).commit();
-                bottom.setBackgroundResource(R.color.recipes);
+
 
                 //Se colocan invisibles los textos
                 homeTxt.setVisibility(View.GONE);
@@ -621,7 +618,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                 //Se destaca el elemento seleccionado
-                recipesLayout.setBackgroundResource(R.drawable.background_item_recipes);
+                recipesLayout.setBackgroundResource(R.drawable.background_item_menu);
                 recipesTxt.setVisibility(View.VISIBLE);
                 scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                 scaleAnimation.setDuration(200);
@@ -633,7 +630,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
                 break;
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutUsuarios,new SettingsFragment_Usuarios()).commit();
-                bottom.setBackgroundResource(R.color.settings);
+
 
                 //Se colocan invisibles los textos
                 homeTxt.setVisibility(View.GONE);
@@ -655,7 +652,7 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
 
 
                 //Se destaca el elemento seleccionado
-                settingsLayout.setBackgroundResource(R.drawable.background_item_settings);
+                settingsLayout.setBackgroundResource(R.drawable.background_item_menu);
                 settingsTxt.setVisibility(View.VISIBLE);
                 scaleAnimation = new ScaleAnimation(0.8f,1.0f,1.f,1f, Animation.RELATIVE_TO_SELF,0.0f,Animation.RELATIVE_TO_SELF,0.0f);
                 scaleAnimation.setDuration(200);
@@ -673,6 +670,11 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
             case R.id.nav_perfil:
                 Intent intent2 = new Intent(this, Mi_Perfil_Activity.class);
                 startActivity(intent2);
+                finish();
+                break;
+            case R.id.nav_cambiar_contrasena:
+                Intent intent3 = new Intent(this, olvido_contrasena_activity.class);
+                startActivity(intent3);
                 finish();
                 break;
             case R.id.nav_logout:

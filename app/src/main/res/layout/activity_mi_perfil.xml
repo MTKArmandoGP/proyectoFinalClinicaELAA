@@ -262,6 +262,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <Button
+                android:id="@+id/Cambiar_contrasena"
+                android:layout_width="240dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:text="Cambiar Contraseña"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                app:layout_constraintVertical_bias="0.96" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_regresar_miPerfil"
                 android:layout_width="wrap_content"
