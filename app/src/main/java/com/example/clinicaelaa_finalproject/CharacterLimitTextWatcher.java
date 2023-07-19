@@ -4,7 +4,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-public class CharacterLimitTextWatcher implements TextWatcher {
+public class CharacterLimitTextWatcher {
     private EditText editText;
     private int maxLength;
 
@@ -13,15 +13,6 @@ public class CharacterLimitTextWatcher implements TextWatcher {
         this.maxLength = maxLength;
     }
 
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        // No se requiere implementación
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // No se requiere implementación
-    }
 
     @Override
     public void afterTextChanged(Editable s) {
@@ -29,6 +20,6 @@ public class CharacterLimitTextWatcher implements TextWatcher {
             String limitedText = s.toString().substring(0, maxLength);
             editText.setText(limitedText);
             editText.setSelection(maxLength);
-        }
+
     }
 }

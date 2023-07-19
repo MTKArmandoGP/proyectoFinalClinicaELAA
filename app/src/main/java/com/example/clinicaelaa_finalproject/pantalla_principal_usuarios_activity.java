@@ -167,12 +167,6 @@ public class pantalla_principal_usuarios_activity extends AppCompatActivity impl
             }
         };
 
-        // Cargar la imagen sin usar la memoria caché
-        Picasso.get()
-                .load(foto + "?timestamp=" + System.currentTimeMillis())
-                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                .into(target);
-
         // Imprimir los datos en la consola
         System.out.println("DATOOOOS OBTENIDOOOOS");
         System.out.println(id + " " + nombre + " " + apellidos + " " + correo + " " + numero + " " + password + " " + rol + " " + usuario + " " + foto);

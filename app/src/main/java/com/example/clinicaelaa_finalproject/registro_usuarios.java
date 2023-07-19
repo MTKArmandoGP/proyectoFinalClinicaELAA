@@ -189,7 +189,6 @@ public class registro_usuarios extends Fragment {
                     "&correo_usuario=" + correo +
                     "&numero_usuario=" + telefono +
                     "&password_usuario=" + contraseña +
-                    "&rol_usuario=2" +
                     "&usuario_usuario=" + usuario;
 
             try {
@@ -230,7 +229,6 @@ public class registro_usuarios extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
             } else {
-                Toast.makeText(getContext(), "Error al enviar los datos", Toast.LENGTH_SHORT).show();
             }
         }
     }

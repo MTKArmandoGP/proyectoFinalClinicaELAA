@@ -231,7 +231,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (rol.equals("1")){
+                if (rol.equals("2")){
 
                     Intent intent = new Intent(getApplicationContext(), pantalla_principal_Doctores_activity.class);
                     startActivity(intent);
@@ -240,7 +240,7 @@ public class Mi_Perfil_Activity extends AppCompatActivity {
 
                 }else{
 
-                Intent intent = new Intent(getApplicationContext(), pantalla_principal_usuarios_activity.class);
+                Intent intent = new Intent(getApplicationContext(), pantalla_principal_Doctores_activity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 finish();

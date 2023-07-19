@@ -51,8 +51,6 @@ public class Login_Activity extends AppCompatActivity {
         edtUsuario = findViewById(R.id.txtusuario_login);
         edtPassword=findViewById(R.id.txtcontraseña_login);
 
-        recuperarPreferencias();
-
         //Evento clic del boton de Ingresar
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +104,6 @@ public class Login_Activity extends AppCompatActivity {
 
                     // Obtener el valor del campo rol_usuario de la respuesta
                     int rolUsuario = obtenerRolUsuario(response);
-                    guardarPreferencias();
-
                     // Lanzar una actividad diferente según el rol de usuario
                     switch (rolUsuario) {
                         case 1: // Admin
@@ -163,27 +159,5 @@ public class Login_Activity extends AppCompatActivity {
         return 0;
     }
 
-
-    private void guardarPreferencias() {
-        SharedPreferences preferences = getSharedPreferences("preferenciasLogin", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("usuario", usuario);
-        editor.putString("password", password);
-        editor.putBoolean("sesion", true);
-
-
-        // Obtener el valor del campo "rol_usuario" de la respuesta del servidor
-        int rolUsuario = obtenerRolUsuario(response);
-
-        // Guardar el valor del campo "rol_usuario"
-        editor.putInt("rol_usuario", rolUsuario);
-
-        editor.apply();
-    }
-
-    private void recuperarPreferencias(){
-        SharedPreferences preferences=getSharedPreferences("preferenciasLogin",Context.MODE_PRIVATE);
-
-    }
 
 }

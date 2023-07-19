@@ -188,9 +188,6 @@ public class registro_doctores extends Fragment {
         String postData = "nombre_usuario=" + nombre +
                 "&apellidos_usuario=" + apellidos +
                 "&correo_usuario=" + correo +
-                "&numero_usuario=" + numero +
-                "&password_usuario=" + password +
-                "&rol_usuario=" + rol +
                 "&usuario_usuario=" + usuario;
 
         new RegistroTask().execute(url, postData);
@@ -263,8 +260,6 @@ public class registro_doctores extends Fragment {
                 } catch (JSONException e) {
                     Log.e("Registro", "Error al procesar la respuesta JSON: " + e.getMessage());
                 }
-            } else {
-                Log.e("Registro", "No se recibió respuesta del servidor");
             }
         }
     }
